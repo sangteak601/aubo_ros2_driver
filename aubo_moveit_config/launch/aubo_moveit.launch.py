@@ -61,15 +61,6 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    # # Static TF
-    # static_tf_node = Node(
-    #     package="tf2_ros",
-    #     executable="static_transform_publisher",
-    #     name="static_transform_publisher",
-    #     output="log",
-    #     arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"],
-    # )
-
     # Publish TF
     robot_state_pub_node = Node(
         package="robot_state_publisher",
@@ -102,7 +93,19 @@ def launch_setup(context, *args, **kwargs):
         arguments=["arm_controller", "--param-file", robot_controllers],
     )
 
-    nodes_to_start = [move_group_node, rviz_node, robot_state_pub_node, ros2_control_node, joint_state_broadcaster_spawner, arm_controller_spawner]
+    test_script_node = Node(
+        package="test_script",
+        executable="test_script",
+        output="screen",
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            moveit_config.joint_limits,
+        ],
+    )
+
+    nodes_to_start = [move_group_node, rviz_node, robot_state_pub_node, ros2_control_node, joint_state_broadcaster_spawner, arm_controller_spawner, test_script_node]
     return nodes_to_start
 
 

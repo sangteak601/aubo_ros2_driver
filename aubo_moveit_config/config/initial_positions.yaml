@@ -1,0 +1,7 @@
+initial_positions:
+  shoulder_joint: 3.14
+  upperArm_joint: 0.2618
+  foreArm_joint: -1.8318
+  wrist1_joint: -0.5236
+  wrist2_joint: -1.57
+  wrist3_joint: 0.0

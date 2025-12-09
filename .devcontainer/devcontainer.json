@@ -1,0 +1,48 @@
+{
+    "name": "ROS 2 Development Container",
+    "privileged": true,
+    "remoteUser": "${localEnv:USERNAME}",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "USERNAME": "${localEnv:USERNAME}"
+        }
+    },
+    "workspaceFolder": "/home/${localEnv:USERNAME}/ros2_ws",
+    "workspaceMount": "source=${localWorkspaceFolder},target=${containerWorkspaceFolder},type=bind",
+    "customizations": {
+        "vscode": {
+            "extensions":[
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-themes",
+				"twxs.cmake",
+				"ms-python.python",
+				"eamodio.gitlens",
+                "ms-iot.vscode-ros",
+				"shardulm94.trailing-spaces",
+                "DotJoshJohnson.xml",
+				"ms-azuretools.vscode-docker",
+				"redhat.vscode-yaml",
+				"smilerobotics.urdf",
+				"streetsidesoftware.code-spell-checker",
+				"yzhang.markdown-all-in-one"
+			]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "unix:0",
+        "ROS_AUTOMATIC_DISCOVERY_RANGE": "LOCALHOST",   // After Humble
+        "ROS_DOMAIN_ID": "42"
+    },
+    "runArgs": [
+        "--net=host",
+        "--pid=host",
+        "--ipc=host",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ],
+    "mounts": [
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+        "source=/dev/,target=/dev/,type=bind"
+    ],
+    "postCreateCommand": "sudo apt-get update && rosdep update && rosdep install --from-paths . --ignore-src -y && sudo chown -R ${localEnv:USERNAME} /home/${localEnv:USERNAME}/ && sudo usermod -a -G dialout ${localEnv:USERNAME}"
+}

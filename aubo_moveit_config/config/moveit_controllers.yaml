@@ -1,14 +1,18 @@
-controller_names:
-  - joint_trajectory_controller
+# MoveIt uses this configuration for controller management
 
-joint_trajectory_controller:
-  action_ns: follow_joint_trajectory
-  type: FollowJointTrajectory
-  default: true
-  joints:
-    - shoulder_joint
-    - foreArm_joint
-    - upperArm_joint
-    - wrist1_joint
-    - wrist2_joint
-    - wrist3_joint
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - arm_controller
+
+  arm_controller:
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    joints:
+      - shoulder_joint
+      - upperArm_joint
+      - foreArm_joint
+      - wrist1_joint
+      - wrist2_joint
+      - wrist3_joint

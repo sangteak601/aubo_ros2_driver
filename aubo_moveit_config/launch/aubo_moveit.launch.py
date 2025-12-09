@@ -3,27 +3,14 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
 from launch.substitutions import (
-    Command,
-    FindExecutable,
     LaunchConfiguration,
     PathJoinSubstitution,
 )
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 import os
-import yaml
 from moveit_configs_utils import MoveItConfigsBuilder
 
-
-def load_yaml(package_name, file_path):
-    package_path = get_package_share_directory(package_name)
-    absolute_file_path = os.path.join(package_path, file_path)
-
-    try:
-        with open(absolute_file_path, "r") as file:
-            return yaml.safe_load(file)
-    except EnvironmentError:  # parent of IOError, OSError *and* WindowsError where available
-        return None
 
 
 def launch_setup(context, *args, **kwargs):
@@ -33,7 +20,7 @@ def launch_setup(context, *args, **kwargs):
     use_real_hardware = LaunchConfiguration("use_real_hardware")
 
     moveit_config = (
-        MoveItConfigsBuilder(robot_name="aubo_iS10", package_name=moveit_config_package)
+        MoveItConfigsBuilder(robot_name="aubo", package_name=moveit_config_package.perform(context))
         .robot_description(
             file_path="config/aubo_iS10.urdf.xacro",
             mappings={"use_real_hardware": use_real_hardware, "ip": ip},
@@ -50,7 +37,7 @@ def launch_setup(context, *args, **kwargs):
         "capabilities": "pilz_industrial_motion_planner/MoveGroupSequenceAction pilz_industrial_motion_planner/MoveGroupSequenceService"
     }
 
-    move_group_node = launch_ros.actions.Node(
+    move_group_node = Node(
         package="moveit_ros_move_group", executable="move_group", output="screen", parameters=[moveit_config.to_dict()]
     )
 

@@ -5,7 +5,7 @@
     <xacro:arg name="robot_ip" default="192.168.10.2" />
 
     <!-- Import aubo_iS10 urdf file -->
-    <xacro:include filename="$(find aubo_iS10_moveit_config)/config/aubo_iS10.urdf" />
+    <xacro:include filename="$(find aubo_moveit_config)/config/aubo_iS10.urdf" />
 
     <!-- Import control_xacro -->
     <xacro:include filename="aubo_iS10.ros2_control.xacro" />

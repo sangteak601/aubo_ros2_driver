@@ -22,9 +22,9 @@
         <joint name="wrist3_joint" value="0"/>
     </group_state>
     <group_state name="ready" group="arm">
-        <joint name="foreArm_joint" value="3.14"/>
-        <joint name="shoulder_joint" value="0.2618"/>
-        <joint name="upperArm_joint" value="-1.8318"/>
+        <joint name="shoulder_joint" value="3.14"/>
+        <joint name="upperArm_joint" value="0.2618"/>
+        <joint name="foreArm_joint" value="-1.8318"/>
         <joint name="wrist1_joint" value="-0.5236"/>
         <joint name="wrist2_joint" value="-1.57"/>
         <joint name="wrist3_joint" value="-1.57"/>
